@@ -58,6 +58,7 @@ class NatsClient {
   ///  ..tlsRequired = false
   /// await client.connect(connectionOptions: options);
   /// ```
+
   void connect(
       {ConnectionOptions connectionOptions,
       void onConnect(),
@@ -67,7 +68,7 @@ class NatsClient {
       onConnect();
     }
     _protocolHandler = ProtocolHandler(socket: _socket, log: log);
-    _socket.transform(utf8.decoder).listen((data) {
+    _socket.cast<List<int>>().transform(utf8.decoder).listen((data) {
       _serverPushString(data,
           connectionOptions: connectionOptions,
           onClusterupdate: onClusterupdate);
